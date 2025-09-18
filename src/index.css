@@ -1,0 +1,27 @@
+:root {
+    --color-gray: #333333;
+    --color-gray-dark: #222222;
+    --color-gray-light: #cccccc;
+    --color-ongoing: #98c1d9;
+    --color-done: #ee6c4d;
+    font-family: Helvetica, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}

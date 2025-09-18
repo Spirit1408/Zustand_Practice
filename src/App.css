@@ -1,0 +1,4 @@
+.app {
+    backround: var(--color-gray);
+    min-height: 100vh;
+}
