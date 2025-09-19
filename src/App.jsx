@@ -2,11 +2,16 @@ import "./App.css";
 import Column from "./components/Column";
 
 function App() {
+    const states = ["Planned", "Ongoing", "Done"];
+
     return (
         <div className="app">
-            <Column state={"Planned"} />
-            <Column state={"Ongoing"} />
-            <Column state={"Done"} />
+            {states.map((state) => (
+                <Column
+                    key={state}
+                    state={state}
+                />
+            ))}
         </div>
     );
 }

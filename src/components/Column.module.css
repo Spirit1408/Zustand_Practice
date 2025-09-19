@@ -17,3 +17,11 @@
         gap: 0.5rem;
     }
 }
+
+.noTasks {
+    color: var(--color-gray-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 14rem;
+}

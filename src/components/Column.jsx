@@ -7,7 +7,10 @@ export default function Column({ state }) {
     const tasks = useStore((store) => store.tasks);
     const upperState = state.toUpperCase();
     const filter = useMemo(
-        () => tasks.filter((task) => String(task.state).toUpperCase() === upperState),
+        () =>
+            tasks.filter(
+                (task) => String(task.state).toUpperCase() === upperState
+            ),
         [tasks, upperState]
     );
 
@@ -16,13 +19,17 @@ export default function Column({ state }) {
             <p>{state}</p>
 
             <div className={style.tasks}>
-                {filter.map((task) => (
-                    <Task
-                        key={task.title}
-                        title={task.title}
-                        state={task.state}
-                    />
-                ))}
+                {filter.length ? (
+                    filter.map((task) => (
+                        <Task
+                            key={task.title}
+                            title={task.title}
+                            state={task.state}
+                        />
+                    ))
+                ) : (
+                    <div className={style.noTasks}>No tasks</div>
+                )}
             </div>
         </div>
     );
