@@ -5,13 +5,12 @@ import Task from "./Task";
 
 export default function Column({ state }) {
     const tasks = useStore((store) => store.tasks);
-    const upperState = state.toUpperCase();
     const filter = useMemo(
         () =>
             tasks.filter(
-                (task) => String(task.state).toUpperCase() === upperState
+                (task) => String(task.state).toUpperCase() === state.toUpperCase()
             ),
-        [tasks, upperState]
+        [tasks, state]
     );
 
     return (

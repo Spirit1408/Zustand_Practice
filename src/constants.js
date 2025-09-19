@@ -1,0 +1,1 @@
+export const states = ["Planned", "Ongoing", "Done"];

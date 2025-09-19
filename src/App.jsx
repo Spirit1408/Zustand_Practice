@@ -1,9 +1,8 @@
 import "./App.css";
 import Column from "./components/Column";
+import { states } from "./constants";
 
 function App() {
-    const states = ["Planned", "Ongoing", "Done"];
-
     return (
         <div className="app">
             {states.map((state) => (

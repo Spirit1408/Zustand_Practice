@@ -2,16 +2,17 @@ import classNames from "classnames";
 import style from "./Task.module.css";
 
 export default function Task({ title, state }) {
-    const upperState = state.toUpperCase();
-    const status = ["PLANNED", "ONGOING", "DONE"].includes(upperState) ? upperState : "PLANNED";
-
     return (
         <div className={style.task}>
             <p>{title}</p>
 
             <div className={style.status}>
-                <p className={classNames(style.statusLabel, style[status])}>
-                    {status}
+                <p
+                    className={classNames(
+                        style.statusLabel,
+                        style[state]
+                    )}>
+                    {state}
                 </p>
             </div>
         </div>
