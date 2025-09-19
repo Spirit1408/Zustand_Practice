@@ -1,0 +1,31 @@
+import { useMemo } from "react";
+import { useStore } from "../store";
+import style from "./Column.module.css";
+import Task from "./Task";
+
+export default function Column({ state }) {
+    const tasks = useStore((store) => store.tasks);
+    const upperState = state.toUpperCase();
+    const filter = useMemo(
+        () => tasks.filter((task) => String(task.state).toUpperCase() === upperState),
+        [tasks, upperState]
+    );
+
+    return (
+        <div className={style.column}>
+            <p>{state}</p>
+
+            <div className={style.tasks}>
+                {filter.map((task) => (
+                    <Task
+                        key={task.title}
+                        title={task.title}
+                        state={task.state}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+
+//* Component for set of tasks.

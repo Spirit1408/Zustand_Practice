@@ -1,0 +1,19 @@
+.column {
+    background-color: var(--color-gray-dark);
+    min-height: 20rem;
+    color: #ffffff;
+    width: 33%;
+    max-width: 20rem;
+    border-radius: 25px;
+    padding: 1rem;
+
+    & > p {
+        margin-bottom: 0.5rem;
+    }
+
+    .tasks {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
