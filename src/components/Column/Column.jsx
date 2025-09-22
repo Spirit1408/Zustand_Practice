@@ -1,8 +1,9 @@
 import { useMemo } from "react";
-import { useStore } from "../store";
+import { useStore } from "../../store";
 import style from "./Column.module.css";
-import Task from "./Task";
+import Task from "../Task/Task";
 import { shallow } from "zustand/shallow";
+import { useModalStore } from "./../../modalStore";
 
 export default function Column({ state }) {
     const tasks = useStore((store) => store.tasks, shallow);
@@ -10,16 +11,28 @@ export default function Column({ state }) {
         () => tasks.filter((task) => task.state === state.toUpperCase()),
         [tasks, state]
     );
+    const onOpen = useModalStore((store) => store.onOpen);
+
+    const handleAddClick = () => {
+        onOpen();
+    };
 
     return (
         <div className={style.column}>
-            <p>{state}</p>
+            <div className={style.header}>
+                <p>{state}</p>
+                <button
+                    className={style.addButton}
+                    onClick={handleAddClick}>
+                    Add
+                </button>
+            </div>
 
             <div className={style.tasks}>
                 {filter.length ? (
                     filter.map((task) => (
                         <Task
-                            key={task.title}
+                            key={task.id}
                             title={task.title}
                         />
                     ))

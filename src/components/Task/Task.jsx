@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import style from "./Task.module.css";
-import { useStore } from "../store";
+import { useStore } from "../../store";
 
 export default function Task({ title }) {
     const task = useStore((store) =>

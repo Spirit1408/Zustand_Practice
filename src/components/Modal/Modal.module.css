@@ -1,0 +1,90 @@
+.modalOverlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modalOverlay.closing {
+    opacity: 0;
+    animation: fadeOut 0.3s ease-in-out;
+}
+
+.modal {
+    position: relative;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+    animation: scaleIn 0.3s ease-in-out;
+}
+
+.modalOverlay.closing .modal {
+    transform: scale(0.9);
+    animation: scaleOut 0.3s ease-in-out;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: black;
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleOut {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+}

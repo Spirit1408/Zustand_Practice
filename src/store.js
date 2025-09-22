@@ -2,14 +2,14 @@ import { create } from "zustand";
 
 const store = (set) => ({
     tasks: [
-        { title: "Tesk task", state: "PLANNED" },
-        { title: "Tesk task 1", state: "ONGOING" },
-        { title: "Tesk task 2", state: "DONE" },
-        { title: "Tesk task 3", state: "PLANNED" },
+        { id: 1, title: "Tesk task", state: "PLANNED" },
+        { id: 2, title: "Tesk task 1", state: "ONGOING" },
+        { id: 3, title: "Tesk task 2", state: "DONE" },
+        { id: 4, title: "Tesk task 3", state: "PLANNED" },
     ],
-    addTask: (task) => set((state) => ({ tasks: [...state.tasks, task] })),
-    deleteTask: (id) => set((state) => ({ tasks: state.tasks.filter((task) => task.id !== id) })),
-    updateTask: (task) => set((state) => ({ tasks: state.tasks.map((t) => (t.id === task.id ? task : t)) })),
+    addTask: (title, state) => set((store) => ({ tasks: [...store.tasks, { id: store.tasks.length + 1, title, state }] })),
+    deleteTask: (id) => set((store) => ({ tasks: store.tasks.filter((task) => task.id !== id) })),
+    updateTask: (task) => set((store) => ({ tasks: store.tasks.map((t) => (t.id === task.id ? task : t)) })),
 });
 
 export const useStore = create(store);

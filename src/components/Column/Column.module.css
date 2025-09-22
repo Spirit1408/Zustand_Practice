@@ -1,0 +1,45 @@
+.column {
+    background-color: var(--color-gray-dark);
+    min-height: 20rem;
+    color: #ffffff;
+    width: 33%;
+    max-width: 20rem;
+    border-radius: 25px;
+    padding: 1rem;
+
+    .tasks {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+.noTasks {
+    color: var(--color-gray-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 14rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.addButton {
+    border: 1px solid var(--color-gray-light);
+    border-radius: 10px;
+    padding: 0.5rem;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--color-gray-light);
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: white;
+        color: var(--color-gray-dark);
+    }
+}

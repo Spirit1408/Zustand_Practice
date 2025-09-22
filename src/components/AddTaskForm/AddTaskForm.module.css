@@ -1,0 +1,53 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.title {
+    padding: 5px 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid black;
+}
+
+.selectStatus {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-around;
+    & > label {
+        cursor: pointer;
+    }
+}
+
+.done.selected {
+    color: var(--color-done);
+}
+
+.planned.selected {
+    color: var(--color-gray-light);
+}
+
+.ongoing.selected {
+    color: var(--color-ongoing);
+}
+
+.done,
+.planned,
+.ongoing {
+    color: #6b7280;
+}
+
+.submit {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--color-gray);
+    color: white;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    &:hover {
+        background-color: var(--color-gray-light);
+        color: black;
+    }
+}
