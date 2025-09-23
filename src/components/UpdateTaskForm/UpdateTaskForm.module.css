@@ -43,7 +43,7 @@
     border-radius: 5px;
     border: none;
     cursor: pointer;
-    background-color: var(--color-ongoing);
+    background-color: var(--color-gray);
     color: white;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
     &:hover {
