@@ -1,11 +1,20 @@
 import classNames from "classnames";
 import style from "./Task.module.css";
 import { useStore } from "../../store";
+import { useModalStore } from "../../modalStore";
 
 export default function Task({ title }) {
     const task = useStore((store) =>
         store.tasks.find((task) => task.title === title)
     );
+
+    const onDelete = useStore((store) => store.deleteTask);
+    const onOpenEdit = useModalStore((store) => store.onOpenEdit);
+
+    const handleDeleteTask = () => onDelete(task.id);
+    const handleEditTask = () => {
+        onOpenEdit(task);
+    };
 
     return (
         <div className={style.task}>
@@ -15,6 +24,20 @@ export default function Task({ title }) {
                 <p className={classNames(style.statusLabel, style[task.state])}>
                     {task.state}
                 </p>
+            </div>
+
+            <div className={style.actions}>
+                <button
+                    className={style.editTaskBtn}
+                    onClick={handleEditTask}>
+                    v
+                </button>
+
+                <button
+                    className={style.deleteTaskBtn}
+                    onClick={handleDeleteTask}>
+                    x
+                </button>
             </div>
         </div>
     );

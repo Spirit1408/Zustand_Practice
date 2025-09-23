@@ -2,6 +2,7 @@ import styles from "./Modal.module.css";
 import { useModalStore } from "./../../modalStore";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import Portal from "../Portal/Portal";
 
 export default function Modal({ children }) {
     const onClose = useModalStore((store) => store.onClose);
@@ -20,20 +21,22 @@ export default function Modal({ children }) {
     }, [handleClose]);
 
     return (
-        <div
-            className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
-            onClick={handleClose}
-            onKeyDown={handleClose}>
-            <div className={styles.modal}>
-                <button
-                    className={styles.closeButton}
-                    onClick={handleClose}>
-                    ×
-                </button>
+        <Portal>
+            <div
+                className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
+                onClick={handleClose}
+                onKeyDown={handleClose}>
+                <div className={styles.modal}>
+                    <button
+                        className={styles.closeButton}
+                        onClick={handleClose}>
+                        ×
+                    </button>
 
-                {children}
+                    {children}
+                </div>
             </div>
-        </div>
+        </Portal>
     );
 }
 //TODO Add form for adding new task

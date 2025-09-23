@@ -7,6 +7,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+
+    &:hover .actions {
+        display: flex;
+    }
 }
 
 .status {
@@ -30,4 +35,19 @@
 
 .DONE {
     background-color: var(--color-done);
+}
+
+.actions {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    gap: 5px;
+    display: none;
+}
+
+.deleteTaskBtn, .editTaskBtn {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: large;
 }

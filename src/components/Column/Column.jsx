@@ -11,10 +11,10 @@ export default function Column({ state }) {
         () => tasks.filter((task) => task.state === state.toUpperCase()),
         [tasks, state]
     );
-    const onOpen = useModalStore((store) => store.onOpen);
+    const onOpenAdd = useModalStore((store) => store.onOpenAdd);
 
     const handleAddClick = () => {
-        onOpen();
+        onOpenAdd();
     };
 
     return (
