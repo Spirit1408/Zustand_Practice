@@ -11,6 +11,7 @@ export const TaskForm = ({ mode = "add" }) => {
     const updateTask = useStore((state) => state.updateTask);
     const editingTask = useModalStore((state) => state.editingTask);
     const handleClose = useModalStore((state) => state.onClose);
+    const state = useModalStore((state) => state.columnState);
 
     useEffect(() => {
         if (mode === "edit" && editingTask) {
@@ -18,12 +19,14 @@ export const TaskForm = ({ mode = "add" }) => {
             setSelectedStatus(editingTask.state);
         } else if (mode === "add") {
             setTitle("");
-            setSelectedStatus("");
+            setSelectedStatus(state.toUpperCase());
         }
-    }, [mode, editingTask]);
+    }, [mode, state, editingTask]);
 
     const handleStatusChange = (e) => {
-        setSelectedStatus(e.target.value);
+        if (mode === "edit") {
+            setSelectedStatus(e.target.value);
+        }
     };
 
     const handleTitleChange = (e) => {
@@ -52,8 +55,6 @@ export const TaskForm = ({ mode = "add" }) => {
         handleClose();
     };
 
-    const isSubmitDisabled = mode === "add" ? !selectedStatus : false;
-
     return (
         <form
             className={css.form}
@@ -67,7 +68,10 @@ export const TaskForm = ({ mode = "add" }) => {
                 required
             />
 
-            <div className={css.selectStatus}>
+            <div
+                className={`${css.selectStatus} ${
+                    mode === "add" && css.hidden
+                }`}>
                 <label>
                     <p
                         className={`${css.planned} ${
@@ -126,8 +130,7 @@ export const TaskForm = ({ mode = "add" }) => {
 
             <button
                 className={css.submit}
-                type="submit"
-                disabled={isSubmitDisabled}>
+                type="submit">
                 {mode === "add" ? "Add" : "Update"}
             </button>
         </form>

@@ -5,12 +5,14 @@ const store = (set) => ({
     isClosing: false,
     modalType: null,
     editingTask: null,
+    columnState: null,
     
-    onOpenAdd: () => set({ 
+    onOpenAdd: (state) => set({ 
         isOpen: true, 
         isClosing: false, 
         modalType: 'add',
-        editingTask: null 
+        editingTask: null,
+        columnState: state 
     }),
     
     onOpenEdit: (task) => set({ 
@@ -26,7 +28,8 @@ const store = (set) => ({
             isOpen: false, 
             isClosing: false, 
             modalType: null,
-            editingTask: null 
+            editingTask: null,
+            columnState: null
         }), 300);
     },
 });

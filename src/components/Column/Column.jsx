@@ -4,8 +4,13 @@ import style from "./Column.module.css";
 import Task from "../Task/Task";
 import { shallow } from "zustand/shallow";
 import { useModalStore } from "./../../modalStore";
+import Modal from "./../Modal/Modal";
+import { TaskForm } from "../TaskForm/TaskForm";
 
 export default function Column({ state }) {
+    const isOpen = useModalStore((store) => store.isOpen);
+    const modalType = useModalStore((store) => store.modalType);
+
     const tasks = useStore((store) => store.tasks, shallow);
     const filter = useMemo(
         () => tasks.filter((task) => task.state === state.toUpperCase()),
@@ -14,7 +19,7 @@ export default function Column({ state }) {
     const onOpenAdd = useModalStore((store) => store.onOpenAdd);
 
     const handleAddClick = () => {
-        onOpenAdd();
+        onOpenAdd(state);
     };
 
     return (
@@ -30,11 +35,22 @@ export default function Column({ state }) {
 
             <div className={style.tasks}>
                 {filter.length ? (
-                    filter.map((task) => <Task key={task.id} id={task.id} />)
+                    filter.map((task) => (
+                        <Task
+                            key={task.id}
+                            id={task.id}
+                        />
+                    ))
                 ) : (
                     <div className={style.noTasks}>No tasks</div>
                 )}
             </div>
+
+            {isOpen && (
+                <Modal>
+                    <TaskForm mode={modalType} />
+                </Modal>
+            )}
         </div>
     );
 }
