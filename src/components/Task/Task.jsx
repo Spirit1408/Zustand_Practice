@@ -3,9 +3,9 @@ import style from "./Task.module.css";
 import { useStore } from "../../store";
 import { useModalStore } from "../../modalStore";
 
-export default function Task({ title }) {
+export default function Task({ id }) {
     const task = useStore((store) =>
-        store.tasks.find((task) => task.title === title)
+        store.tasks.find((task) => task.id === id)
     );
 
     const onDelete = useStore((store) => store.deleteTask);

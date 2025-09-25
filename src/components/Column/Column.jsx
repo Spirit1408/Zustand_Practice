@@ -30,12 +30,7 @@ export default function Column({ state }) {
 
             <div className={style.tasks}>
                 {filter.length ? (
-                    filter.map((task) => (
-                        <Task
-                            key={task.id}
-                            title={task.title}
-                        />
-                    ))
+                    filter.map((task) => <Task key={task.id} id={task.id} />)
                 ) : (
                     <div className={style.noTasks}>No tasks</div>
                 )}
