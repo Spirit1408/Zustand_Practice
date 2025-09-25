@@ -1,31 +1,58 @@
-import { useState } from "react";
-import css from "./AddTaskForm.module.css";
-import { useStore } from "../../store";
+import { useEffect, useState } from "react";
+import css from "./TaskForm.module.css";
+import { useStore } from "./../../store";
 import { useModalStore } from "./../../modalStore";
 
-export const AddTaskForm = () => {
+export const TaskForm = ({ mode = "add" }) => {
     const [selectedStatus, setSelectedStatus] = useState("");
+    const [title, setTitle] = useState("");
 
-    const handleStatusChange = (event) => {
-        setSelectedStatus(event.target.value);
+    const addTask = useStore((state) => state.addTask);
+    const updateTask = useStore((state) => state.updateTask);
+    const editingTask = useModalStore((state) => state.editingTask);
+    const handleClose = useModalStore((state) => state.onClose);
+
+    useEffect(() => {
+        if (mode === "edit" && editingTask) {
+            setTitle(editingTask.title);
+            setSelectedStatus(editingTask.state);
+        } else if (mode === "add") {
+            setTitle("");
+            setSelectedStatus("");
+        }
+    }, [mode, editingTask]);
+
+    const handleStatusChange = (e) => {
+        setSelectedStatus(e.target.value);
     };
 
-    const addTask = useStore((store) => store.addTask);
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+    };
 
-    const handleClose = useModalStore((store) => store.onClose);
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+        if (mode === "add") {
+            addTask(title, selectedStatus);
+            setTitle("");
+            setSelectedStatus("");
+        } else if (mode === "edit" && editingTask) {
+            if (!editingTask) return;
 
-        const title = event.target[0].value;
-        const status = selectedStatus;
+            const updatedTask = {
+                ...editingTask,
+                title,
+                state: selectedStatus,
+            };
 
-        addTask(title, status);
-
-        event.target.reset();
+            updateTask(updatedTask);
+        }
 
         handleClose();
     };
+
+    const isSubmitDisabled = mode === "add" ? !selectedStatus : false;
 
     return (
         <form
@@ -35,6 +62,8 @@ export const AddTaskForm = () => {
                 className={css.title}
                 type="text"
                 placeholder="Task name"
+                value={title}
+                onChange={handleTitleChange}
                 required
             />
 
@@ -98,8 +127,8 @@ export const AddTaskForm = () => {
             <button
                 className={css.submit}
                 type="submit"
-                disabled={!selectedStatus}>
-                Add
+                disabled={isSubmitDisabled}>
+                {mode === "add" ? "Add" : "Update"}
             </button>
         </form>
     );

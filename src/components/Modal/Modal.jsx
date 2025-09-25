@@ -8,10 +8,13 @@ export default function Modal({ children }) {
     const onClose = useModalStore((store) => store.onClose);
     const isClosing = useModalStore((store) => store.isClosing);
 
-    const handleClose = useCallback((e) => {
-        e.stopPropagation();
-        if (e.target === e.currentTarget || e.key === "Escape") onClose();
-    }, [onClose]);
+    const handleClose = useCallback(
+        (e) => {
+            e.stopPropagation();
+            if (e.target === e.currentTarget || e.key === "Escape") onClose();
+        },
+        [onClose]
+    );
 
     useEffect(() => {
         document.addEventListener("keydown", handleClose);
@@ -23,7 +26,9 @@ export default function Modal({ children }) {
     return (
         <Portal>
             <div
-                className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
+                className={`${styles.modalOverlay} ${
+                    isClosing ? styles.closing : ""
+                }`}
                 onClick={handleClose}
                 onKeyDown={handleClose}>
                 <div className={styles.modal}>
@@ -39,5 +44,3 @@ export default function Modal({ children }) {
         </Portal>
     );
 }
-//TODO Add form for adding new task
-//TODO 29:38
