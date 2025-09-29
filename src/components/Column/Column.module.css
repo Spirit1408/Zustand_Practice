@@ -6,11 +6,17 @@
     max-width: 20rem;
     border-radius: 25px;
     padding: 1rem;
+    border: 1px dashed transparent;
+    transition: border 0.2s ease-in-out;
 
     .tasks {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+    }
+
+    &.drop{
+        border: 1px dashed var(--color-gray-light);
     }
 }
 

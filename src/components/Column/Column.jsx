@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useStore } from "../../store";
 import style from "./Column.module.css";
 import Task from "../Task/Task";
@@ -6,6 +6,7 @@ import { shallow } from "zustand/shallow";
 import { useModalStore } from "./../../modalStore";
 import Modal from "./../Modal/Modal";
 import { TaskForm } from "../TaskForm/TaskForm";
+import classNames from "classnames";
 
 export default function Column({ state }) {
     const isOpen = useModalStore((store) => store.isOpen);
@@ -13,6 +14,8 @@ export default function Column({ state }) {
     const setDraggedTask = useStore((store) => store.setDraggedTask);
     const draggedTask = useStore((store) => store.draggedTask);
     const moveTask = useStore((store) => store.moveTask);
+
+    const [drop, setDrop] = useState(false);
 
     const tasks = useStore((store) => store.tasks, shallow);
     const filter = useMemo(
@@ -27,18 +30,25 @@ export default function Column({ state }) {
 
     const handleDragOver = (e) => {
         e.preventDefault();
+        setDrop(true);
+    };
+
+    const handleDragLeave = () => {
+        setDrop(false);
     };
 
     const handleDrop = () => {
         setDraggedTask(null);
         moveTask(draggedTask.id, state.toUpperCase());
+        setDrop(false);
     };
 
     return (
         <div
-            className={style.column}
+            className={classNames(style.column, { [style.drop]: drop })}
             onDragOver={handleDragOver}
-            onDrop={handleDrop}>
+            onDrop={handleDrop}
+            onDragLeave={handleDragLeave}>
             <div className={style.header}>
                 <p>{state}</p>
                 <button
