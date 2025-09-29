@@ -10,6 +10,9 @@ import { TaskForm } from "../TaskForm/TaskForm";
 export default function Column({ state }) {
     const isOpen = useModalStore((store) => store.isOpen);
     const modalType = useModalStore((store) => store.modalType);
+    const setDraggedTask = useStore((store) => store.setDraggedTask);
+    const draggedTask = useStore((store) => store.draggedTask);
+    const moveTask = useStore((store) => store.moveTask);
 
     const tasks = useStore((store) => store.tasks, shallow);
     const filter = useMemo(
@@ -22,8 +25,20 @@ export default function Column({ state }) {
         onOpenAdd(state);
     };
 
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+    const handleDrop = () => {
+        setDraggedTask(null);
+        moveTask(draggedTask.id, state.toUpperCase());
+    };
+
     return (
-        <div className={style.column}>
+        <div
+            className={style.column}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}>
             <div className={style.header}>
                 <p>{state}</p>
                 <button

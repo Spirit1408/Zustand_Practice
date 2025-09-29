@@ -10,6 +10,7 @@ export default function Task({ id }) {
 
     const onDelete = useStore((store) => store.deleteTask);
     const onOpenEdit = useModalStore((store) => store.onOpenEdit);
+    const setDraggedTask = useStore((store) => store.setDraggedTask);
 
     const handleDeleteTask = () => onDelete(task.id);
     const handleEditTask = () => {
@@ -17,7 +18,7 @@ export default function Task({ id }) {
     };
 
     return (
-        <div className={style.task}>
+        <div className={style.task} draggable onDragStart={() => setDraggedTask(task)}>
             <p>{task.title}</p>
 
             <div className={style.status}>

@@ -8,6 +8,7 @@
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    cursor: move;
 
     &:hover .actions {
         display: flex;
