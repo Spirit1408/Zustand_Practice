@@ -1,7 +1,94 @@
-import { test, expect } from 'vitest';
+import { render } from "@testing-library/react";
+import { useEffect } from "react";
+import { test, expect, vi } from "vitest";
+import { useStore } from "./store";
+import { useShallow } from "zustand/react/shallow";
 
-test("sample", () => {
-    expect(1).toEqual(1);
+// test("sample", () => {
+//     expect(1).toEqual(1);
+// }); Example of the unit test
+
+vi.mock("zustand");
+
+function TestComponent({ selector, effect, useShallowHook }) {
+    const items = useStore(useShallowHook(selector));
+
+    useEffect(() => {
+        effect(items);
+    }, [items, effect]);
+
+    return null;
+}
+
+test("Should return default value at the start", () => {
+    const selector = (store) => store.tasks;
+    const effect = vi.fn();
+    render(
+        <TestComponent
+            selector={selector}
+            effect={effect}
+            useShallowHook={useShallow}
+        />
+    );
+    expect(effect).toHaveBeenCalledWith([]);
 });
 
-//TODO 55:00
+test("Should add an items to the store and rerun the effect", () => {
+    const selector = (store) => ({
+        tasks: store.tasks,
+        addTask: store.addTask,
+    });
+    const effect = vi.fn().mockImplementation((items) => {
+        if (items.tasks.length === 0) {
+            items.addTask("test", "PLANNED");
+        }
+    });
+
+    render(
+        <TestComponent
+            selector={selector}
+            effect={effect}
+            useShallowHook={useShallow}
+        />
+    );
+
+    expect(effect).toHaveBeenCalledTimes(2);
+    expect(effect).toHaveBeenCalledWith(
+        expect.objectContaining({
+            tasks: [{ id: 1, title: "test", state: "PLANNED" }],
+            addTask: expect.any(Function),
+        })
+    );
+});
+
+test("Should delete an items from the store and rerun the effect", () => {
+    const selector = (store) => ({
+        tasks: store.tasks,
+        addTask: store.addTask,
+        deleteTask: store.deleteTask,
+    });
+    let createdTask = false;
+    let currentItems;
+    const effect = vi.fn().mockImplementation((items) => {
+        currentItems = items;
+        if (!createdTask) {
+            items.addTask("test", "PLANNED");
+            createdTask = true;
+        } else if (items.tasks.length === 1) {
+            items.deleteTask(1);
+        }
+    });
+
+    render(
+        <TestComponent
+            selector={selector}
+            effect={effect}
+            useShallowHook={useShallow}
+        />
+    );
+
+    expect(effect).toHaveBeenCalledTimes(3);
+    expect(currentItems.tasks).toEqual([]);
+});
+
+//TODO 1:08:41
