@@ -1,16 +1,23 @@
+import { produce } from "immer";
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { devtools, persist, subscribeWithSelector } from "zustand/middleware";
 
 const store = (set) => ({
     tasks: [],
     draggedTask: null,
+    tasksOngoing: null,
+    tasksDone: null,
+    tasksPlanned: null,
     addTask: (title, state) =>
         set(
-            (store) => ({
-                tasks: [
-                    ...store.tasks,
-                    { id: store.tasks.length + 1, title, state },
-                ],
+            // (store) => ({
+            //     tasks: [
+            //         ...store.tasks,
+            //         { id: store.tasks.length + 1, title, state },
+            //     ],
+            // }),
+            produce((store) => {
+                store.tasks.push({ id: store.tasks.length + 1, title, state });
             }),
             false,
             "add task"
@@ -56,7 +63,22 @@ const log = (config) => (set, get, api) =>
     );
 
 export const useStore = create(
-    log(persist(devtools(store), { name: "tasks store" }))
+    subscribeWithSelector(
+        log(persist(devtools(store), { name: "tasks store" }))
+    )
+);
+
+useStore.subscribe(
+    (store) => store.tasks,
+    (newTasks, prevTasks) => {
+        useStore.setState({
+            tasksOngoing: newTasks.filter((task) => task.state === "ONGOING")
+                .length,
+            tasksDone: newTasks.filter((task) => task.state === "DONE").length,
+            tasksPlanned: newTasks.filter((task) => task.state === "PLANNED")
+                .length,
+        });
+    }
 );
 
 //* File for Zustand state management. Arrow function accepts "set" function, which is used to update the state. Function returns the object with state itself (tasks, in this case) and methods, which can be used to update this state (adding, deleting, updating tasks). addTask - method receives task object and adds it to the state (make a new array and append the task to it). deleteTask - method receives id of task to delete and removes it from the state by filtering out the task with this id. updateTask - method receives task object and updates it in the state by mapping over the tasks array and replacing the task with the same id.
