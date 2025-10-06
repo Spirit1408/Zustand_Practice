@@ -44,3 +44,5 @@ export default function Modal({ children }) {
         </Portal>
     );
 }
+
+//* Component for Modal window. Contains the form for adding or updating a task. Parent element for TaskForm component. Using Portal component to render the modal window on the page (in the root element of the DOM). Contains overlay and modal window itself. Has features for closing the modal window by clicking on the overlay or by pressing the "ESC" key.

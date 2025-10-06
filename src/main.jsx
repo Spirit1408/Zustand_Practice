@@ -8,3 +8,5 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+//* Main entry point, where the app is rendered

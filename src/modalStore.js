@@ -28,6 +28,7 @@ const store = (set) => ({
                 isClosing: false,
                 modalType: "edit",
                 editingTask: task,
+                columnState: null,
             },
             false,
             "open edit modal"
@@ -56,3 +57,5 @@ const store = (set) => ({
 export const useModalStore = create(
     persist(devtools(store), { name: "modal store" })
 );
+
+//* Zustand store for modal window. Persist - to save the state in the localStorage, devtools - to see the state in the browser devtools.

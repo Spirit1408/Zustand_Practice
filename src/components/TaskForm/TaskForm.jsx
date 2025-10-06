@@ -136,3 +136,9 @@ export const TaskForm = ({ mode = "add" }) => {
         </form>
     );
 };
+
+//* Component for form for adding or updating a task. Contains input fields for title and status of the task (radio buttons) and button for adding/updating the task. Fields are controlled by local states. Works in two modes - "add" and "edit". "add" mode is used in the Column component to add a new task, "edit" mode is used in the Task component to update an existing task.
+
+//* "Add" mode. Calls from the Column component. Takes status from the column state (radio buttons are hidden). Title of the task takes from the input. While submitting - send title and status as an arguments to the function addTask from the tasks store. Then clear the form (local states) and close the modal window.
+
+//* "Edit" mode. Calls from the Task component. Checks if task, from which form was called, is recorded in modal store. If so - sets the local states of the form with data from selected task. Changing of the title works in the same way, as for "Add" mode. Changing of the status is done by radio buttons. While submitting - create new object with data from the form (unpack title and status from existing task and title and status from the form (to rewrite the task, if it was changed)) and send it to the function updateTask from the tasks store. Then close the modal window.

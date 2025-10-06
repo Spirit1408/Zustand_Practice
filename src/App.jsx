@@ -16,4 +16,4 @@ function App() {
 }
 
 export default App;
-//* Simple exaple of a react app (task manager) with Zustand state management
+//* Simple exaple of a react app (task manager) with Zustand state management. Renders columns of provided states in them.
